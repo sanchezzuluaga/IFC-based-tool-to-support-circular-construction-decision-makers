@@ -1,0 +1,14 @@
+FROM ubuntu:22.04
+
+RUN apt update -y
+RUN apt upgrade -y
+
+RUN apt install -y pip python
+RUN pip install Xxxx
+
+RUN mkdir /cct
+
+COPY Homepage.py /cct/Homepage.py
+COPY data /cct/data
+COPY pages /cct/pages
+COPY tools /cct/tools
