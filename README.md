@@ -23,14 +23,14 @@ The tool is divided into two interfaces. The first interface includes the quanti
 + matplotlib.pyplot
 + pprint
 3. In the tools folder under environmental_functions.py and cost_functions.py the get_distance function needs a google id client, please get one and insert it where the command key = "" is 
-4. To run the tool go to anaconda. Press the play botton of the created environment (step 2) --> Open terminal --> enter the following command : streamlit run "direction" (the "direction" needs to be replaced by the file direction wehre the Homepage.py is located e.g.: 
+4. To run the tool go to anaconda. Press the play  button  of the created environment (step 2) --> Open terminal --> enter the following comand: streamlit run "direction" (the "direction" needs to be replaced by the file direction wehre the Homepage.py is located e.g.: 
 streamlit run C:\Users\simon\Dropbox\01_Master_Thesis\05_Python\App\Homepage.py)
-5. The programm runs and can be used
+5. The program runs and can be used
 
-## Model BIM
-To connect the database with the IFC file shared parameters need to be crated ( In Revit: https://www.youtube.com/watch?v=MGZo8Ue2sq0). THe paramters need to be named as KBOBX, where X is the number of the materials. Id there is a multy-layer element the X needs to increase depending on the number of layers of the element. 
+## Instructions to generate the BIM model
+To connect the database with the IFC file shared parameters need to be created( In Revit: https://www.youtube.com/watch?v=MGZo8Ue2sq0). The parameters need to be named KBOBX, where X is the number of the material. If there is a multi-layer element the X needs to increase depending on the number of layers of the element. 
 
 ### Multi-layer elements:
+For walls, the X in KBOBX needs to increase from the outside to the inside. For roofs and slabs the X in KBOBX neeeds to increse from the top to the bottom.
 
-
-
+<img width="198" alt="Wall" src="https://user-images.githubusercontent.com/122563486/217525946-44814ffc-d2b2-4a60-96a1-f3977cdb42d5.png">
