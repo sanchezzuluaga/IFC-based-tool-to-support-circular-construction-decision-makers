@@ -31,6 +31,7 @@ streamlit run C:\Users\simon\Dropbox\01_Master_Thesis\05_Python\App\Homepage.py)
 To connect the database with the IFC file shared parameters need to be created( In Revit: https://www.youtube.com/watch?v=MGZo8Ue2sq0). The parameters need to be named KBOBX, where X is the number of the material. If there is a multi-layer element the X needs to increase depending on the number of layers of the element. 
 
 ### Multi-layer elements:
-For walls, the X in KBOBX needs to increase from the outside to the inside. For roofs and slabs the X in KBOBX neeeds to increse from the top to the bottom.
+For walls, the X in KBOBX needs to increase from the outside to the inside. For roofs and slabs the X in KBOBX neeeds to increse from the top to the bottom. For sinlge-layer elements 
 
 <img width="198" alt="Wall" src="https://user-images.githubusercontent.com/122563486/217525946-44814ffc-d2b2-4a60-96a1-f3977cdb42d5.png">
+<img width="189" alt="Slab_Roof" src="https://user-images.githubusercontent.com/122563486/217529924-5c43e988-978e-4ae4-bdc9-b33d816650a5.png">
