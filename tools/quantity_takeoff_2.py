@@ -5,6 +5,11 @@ from ifcopenshell.api.material.data import Data
 import numpy as np
 import pandas as pd
 
+#comments:
+#scanrio 0 = worst-case scenario, scenario 1 = baseline scenario, scenario 2 = best-case scenario 
+#cubic dataframe = volume dataframe, square dataframe = area dataframe 
+
+#takes the created dataframe (all information about the proeprty sets, quantity sets, materilas) and assigns the quantits to each object 
 def insert_quantities_in_dataframe(dataframe, attributes_materials_thickness):    
     #initialize all dataframes, if a data frame is empty after the loop --> we can still merge it, otherwise error will appear
     dataframe_ifc_wall = pd.DataFrame()
@@ -173,7 +178,7 @@ def insert_quantities_in_dataframe(dataframe, attributes_materials_thickness):
         else:
             pass
     return dataframe_ifc_wall, dataframe_ifc_slab_landing, dataframe_ifc_slab, dataframe_ifc_beam, dataframe_ifc_column, dataframe_ifc_stairflight, dataframe_ifc_window, dataframe_ifc_door, dataframe_ifc_roof
-
+#gets the classes of the building (e.g. IFcWindows, IfcWall, etc.)
 def get_classes(dataframe):
     classes  =[]
     for object_class in dataframe["Class"].unique():

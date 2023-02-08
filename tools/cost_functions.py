@@ -8,6 +8,9 @@ import matplotlib.pyplot as plt
 import math
 import googlemaps
 
+#comments:
+#scanrio 0 = worst-case scenario, scenario 1 = baseline scenario, scenario 2 = best-case scenario 
+#cubic dataframe = volume dataframe, square dataframe = area dataframe 
 
 # function to get the ditances between two points
 def get_distance(address_1, address_2):
@@ -24,7 +27,7 @@ def get_distance(address_1, address_2):
 
     return distance 
 
-#function that groups what is going to incineration plant and land_fill --> scenario 0 
+#function that groups what is going to incineration plant and land_fill --> worst-case scenario 
 # df1 = datframe cubic or dataframe square
 def get_quantities_landfill_incineration_smelting(df1):
     #grupping what is goingt to smelting plant/ incineration plant/ landfill TYP B
@@ -62,7 +65,7 @@ def get_quantities_landfill_incineration_smelting(df1):
     return (total_volume_incineration, total_volume_land_fill)  
     #return (total_volume_incineration, total_volume_smelting_plant, total_volume_land_fill)
 
-#function to  get a dataframe of the loose volumes for cubic --> fro the transport
+#function to  get a dataframe of the loose volumes for the trucks and transport (volune dataframe )
 #df1 = total squar / cubic, df2 = cost dataframe
 def get_volume_loose_cubic(df1,df2):
     quantities_loose_save = []
@@ -96,7 +99,7 @@ def get_volume_loose_cubic(df1,df2):
     return df_cubic_loose
 
 
-#function to  get a dataframe of the loose volumes for square datframe
+#function to  get a dataframe of the loose volumes for area datframe
 #df1 = total squar / cubic, df2 = cost dataframe
 def get_volume_loose_square(df1,df2):
     quantities_loose_save = []
@@ -133,7 +136,7 @@ def get_volume_loose_square(df1,df2):
 
 
 
-#gets index for matvhcin the cost dataframe with the KBOB of each material
+#gets index for matching the cost dataframe with the KBOB of each material
 #def1= costdataframe, df2= cubic or square_
 def match_cost_df_materials(df1,df2, id_number,index_cubic_square):
     found = False
@@ -169,7 +172,7 @@ def match_cost_df_materials(df1,df2, id_number,index_cubic_square):
  
     return index_cost, found 
 
-#gets the cost for demolition and disposal
+#gets the cost for demolition and disposal (worst-case scenario)
 #df1 = dataframe_total_square or cubic, df2= cost dataframe
 def get_costs_scenario_0_demolition_disposal(df1, df2):
     #dictonaries to save the information
@@ -224,7 +227,7 @@ def get_costs_scenario_0_demolition_disposal(df1, df2):
     return costs_dataframe 
 
 
-# gets the cost for transport for scenario 0 
+# gets the cost for transport for worst-case scenario 
 #df1= datframe_total_cubic, df2 = dataframe_total_square, df3 = cost_dataframe, df4 = cost_transport_dataframe
 def get_cost_transport_scenario_0 (addres_building, address_landfill, address_incinaration_plant, df1, df2, df3, df4 ):
 
@@ -275,7 +278,7 @@ def get_cost_transport_scenario_0 (addres_building, address_landfill, address_in
     #return total_cost_incineration_transport, total_cost_smelting_transport, total_cost_land_fill_transport 
     return total_cost_incineration_transport, total_cost_land_fill_transport
 
-#gets the total costs
+#gets the total costs worst-case scenario
 #df1 = dataframe_total_cubic, df2 =dataframe_total_square   df3 = cost_dataframe, df4 = cost_transport_dataframe   
 #def get_total_cost_scenario_0(df1, df2, df3, df4, addres_building, address_landfill, address_smelting_plant, address_incinaration_plant):
 def get_total_cost_disposal(df1, df2, df3, df4, addres_building, address_landfill, address_incinaration_plant):
@@ -369,7 +372,7 @@ def get_datframe_reuse_recyle_disposal(df1, df2):
     dataframe_disposal.iloc[:,2] = disposal_save
     return dataframe_reuse, dataframe_recycle, dataframe_disposal
 
-# this funciton is for reuse, recycle, disposal for scenario 2
+# this funciton is for reuse, recycle, disposal for best-case scenario
 # getting the dtaframe for reuse, recycle and disposal
 #df1 = datframe_cubic or square,df2 = dataframe_scenarios 
 def get_datframe_reuse_recyle_disposal_2(df1, df2):
@@ -430,7 +433,7 @@ def get_datframe_reuse_recyle_disposal_2(df1, df2):
     dataframe_disposal.iloc[:,2] = disposal_save
     return dataframe_reuse, dataframe_recycle, dataframe_disposal     
 
-
+#gets the cost of deconstruction
 #df1 =  dataframe_reuse_cubic or square, df2= cost_dataframe, 
 def get_cost_deconstruction(df1, df2):
     #delete rows containing zero values
@@ -458,7 +461,7 @@ def get_cost_deconstruction(df1, df2):
     
     return cost_deconstruction
 
-
+#gets the cost of traport to storage (for reuse materials)
 #df1 = dataframe_reuse_cubic, df2= dataframe_reuse_squre, 
 def get_cost_transport_storage(df1, df2, cost_dataframe, cost_transport_dataframe,addres_storage, addres_building):
     # get the cost for storing the materials (storage)
@@ -513,7 +516,7 @@ def get_total_cost_reuse(dataframe_reuse_cubic, dataframe_reuse_square,cost_data
     return total_cost_deconstruction_transport
 
 
-#get recycled 
+#get cost for demolition due to recycle 
 #df1 = dataframe_recycle_cubic or square
 def get_cost_demolition_recycle(df1, cost_dataframe):
         #dictonaries to save the information
@@ -566,7 +569,7 @@ def get_cost_demolition_recycle(df1, cost_dataframe):
     return costs_dataframe
 
 
-
+#gets the quantities that go to the diffretn recycling plants 
 #df1 = dataframe recycle cubic or  square loose (important!!!! loose)
 def get_quantities_recycling_plants(df1):
     #grupping what is goingt to smelting plant/ incineration plant/ landfill TYP B
@@ -625,7 +628,7 @@ def get_quantities_recycling_plants(df1):
     return total_volume_recycle_concrete_brick, total_volume_recycle_glas_gypsum, total_volume_metals, total_volume_wood, total_volume_others
 
 
-
+#get cost of tranport to the recycle plants
 #df1 = dataframe_reuse_cubic, df2= dataframe_reuse_squre, 
 def get_cost_transport_recycle(dataframe_recycle_cubic, dataframe_recycle_square, cost_dataframe, cost_transport_dataframe, addres_building, addres_concrete_brick, addres_glas,addres_metals, addres_wood):
     # get the cost for storing the materials (storage)
@@ -698,7 +701,7 @@ def get_cost_transport_recycle(dataframe_recycle_cubic, dataframe_recycle_square
     return total_cost_transport_recycling
 
 
-
+#gts the total cost due to recycling including demolition, recycle and transport for the square (are dataframe ) and cubic (volume dataframe)
 def get_total_cost_recycle(dataframe_recycle_cubic,dataframe_recycle_square,cost_dataframe,cost_transport_dataframe, addres_building, addres_concrete_brick, addres_glas,addres_metals, addres_wood):
     #gets cost for demolition 
     cost_demolition_and_recycling_square = get_cost_demolition_recycle(dataframe_recycle_square, cost_dataframe)
@@ -717,12 +720,12 @@ def get_total_cost_recycle(dataframe_recycle_cubic,dataframe_recycle_square,cost
 
 
 def get_total_cost(dataframe_total_cubic, dataframe_total_square, cost_dataframe, cost_transport_dataframe, dataframe_scenarios , addres_building, address_landfill, address_incinaration_plant, addres_concrete_brick, addres_glas, addres_metals, addres_wood, addres_storage):
-        #scenario 0 (Disposal)
+    #worst- case scenario
     #totalcosts_scenario_0 = get_total_cost_scenario_0(dataframe_total_cubic, dataframe_total_square, cost_dataframe, cost_transport_dataframe , addres_building, address_landfill, address_smelting_plant, address_incinaration_plant)
     total_costs_scenario_0 = get_total_cost_disposal(dataframe_total_cubic, dataframe_total_square, cost_dataframe, cost_transport_dataframe , addres_building, address_landfill, address_incinaration_plant)
 
     #####
-    #scenario 1 (Baseline scenario)
+    #Baseline scenario
     #gets the % of the reuse/recycle/disposal
     #gets dataframe cubic
     dataframe_reuse_cubic_1, dataframe_recycle_cubic_1, dataframe_disposal_cubic_1 = get_datframe_reuse_recyle_disposal(dataframe_total_cubic, dataframe_scenarios )
@@ -738,7 +741,7 @@ def get_total_cost(dataframe_total_cubic, dataframe_total_square, cost_dataframe
     #Disposal total cost
     total_cost_disposal_1 = get_total_cost_disposal(dataframe_disposal_cubic_1, dataframe_disposal_square_1, cost_dataframe, cost_transport_dataframe , addres_building, address_landfill, address_incinaration_plant)
 
-    ####Scenario 2
+    ####Best-case scenario 
     #gets dataframe cubic
     dataframe_reuse_cubic_2, dataframe_recycle_cubic_2, dataframe_disposal_cubic_2 = get_datframe_reuse_recyle_disposal_2(dataframe_total_cubic, dataframe_scenarios)
     #gets data frame sqaure
@@ -756,7 +759,7 @@ def get_total_cost(dataframe_total_cubic, dataframe_total_square, cost_dataframe
 
 
 
-#functio to get the cost plot for scenario 0
+#function to get the cost plot for the worst-case scenario
 def df_cost_to_plot_scenario_0(df):
     a = df[["Cost Demolition", "Cost Disposal", "Cost Transport"]].sum().to_frame() 
     
@@ -773,7 +776,7 @@ def df_cost_to_plot_scenario_0(df):
     df_output = d
     return df_output
 
-#function to get the cost plot for scenario 1 and scenario 2
+#function to get the cost plot for the baseline  and best-case scenario
 
 def df_cost_to_plot_scenario_1_2(df):
     

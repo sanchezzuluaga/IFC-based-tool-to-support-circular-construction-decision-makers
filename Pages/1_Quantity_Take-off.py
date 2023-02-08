@@ -2,11 +2,15 @@ import streamlit as st
 import ifcopenshell
 import pandas as pd
 #import the functions that are created within the project
-from tools import functions, functions2, functions3, graphs
+from tools import graphs, quantity_takeoff_1, quantity_takeoff_2, quantity_takeoff_3
 import plotly.express as px
 import numpy as np
 
 sst = st.session_state
+
+#comments:
+#scanrio 0 = worst-case scenario, scenario 1 = baseline scenario, scenario 2 = best-case scenario 
+#cubic dataframe = volume dataframe, square dataframe = area dataframe 
 
 
 
@@ -16,23 +20,23 @@ sst = st.session_state
 def get_dataframes(material_dataframe):
 #functions    
     #gets the data from the ifc file and the max_length layer of all the elements  
-    data, pset_attributes, max_length_layers = functions.get_objects_data_by_class(sst.Ifc_file, "IfcBuildingElement")
+    data, pset_attributes, max_length_layers = quantity_takeoff_1.get_objects_data_by_class(sst.Ifc_file, "IfcBuildingElement")
     #cretaes the first data frame with the properties and the quantties 
-    dataframe_properties_quantities = functions.get_pandas_df_1(data,pset_attributes)
+    dataframe_properties_quantities = quantity_takeoff_1.get_pandas_df_1(data,pset_attributes)
     #creates the second dataframe with material thickness and its layers
-    dataframe, attributes_materials_thickness = functions.get_pandas_df_2(sst.Ifc_file,max_length_layers, dataframe_properties_quantities) 
+    dataframe, attributes_materials_thickness = quantity_takeoff_1.get_pandas_df_2(sst.Ifc_file,max_length_layers, dataframe_properties_quantities) 
     #creates the dataframe with empty values for the volumes --> this will be filled up when calculating the volumes 
-    dataframe = functions.get_pandas_df3(attributes_materials_thickness, dataframe)
+    dataframe = quantity_takeoff_1.get_pandas_df3(attributes_materials_thickness, dataframe)
 #functions 2
     # gets the datframes with their respective quantities (divided by IfcClass)
-    dataframe_ifc_wall, dataframe_ifc_slab_landing, dataframe_ifc_slab, dataframe_ifc_beam, dataframe_ifc_column, dataframe_ifc_stairflight, dataframe_ifc_window, dataframe_ifc_door, dataframe_ifc_roof =  functions2.insert_quantities_in_dataframe(dataframe, attributes_materials_thickness )
+    dataframe_ifc_wall, dataframe_ifc_slab_landing, dataframe_ifc_slab, dataframe_ifc_beam, dataframe_ifc_column, dataframe_ifc_stairflight, dataframe_ifc_window, dataframe_ifc_door, dataframe_ifc_roof =  quantity_takeoff_2.insert_quantities_in_dataframe(dataframe, attributes_materials_thickness )
     #merges the dataframes in cubic( e.g IfcWall, IfcSlab)
     dataframe_cubic = pd.concat([dataframe_ifc_wall, dataframe_ifc_slab_landing, dataframe_ifc_slab, dataframe_ifc_beam, dataframe_ifc_column, dataframe_ifc_stairflight, dataframe_ifc_roof])
     dataframe_square = pd.concat([dataframe_ifc_window,dataframe_ifc_door ])
 #functions 3
     # gets the in one column all materials in other column all the quantites
-    dataframe_cubic_2 = functions3.df_material_quanitty (dataframe_cubic, attributes_materials_thickness)
-    dataframe_square_2 = functions3.df_material_quanitty (dataframe_square,attributes_materials_thickness)
+    dataframe_cubic_2 = quantity_takeoff_3.df_material_quanitty (dataframe_cubic, attributes_materials_thickness)
+    dataframe_square_2 = quantity_takeoff_3.df_material_quanitty (dataframe_square,attributes_materials_thickness)
     dataframe_cubic_2.columns = ["Class","Level","Material", "Quantity", "KBOB"]
     dataframe_square_2.columns = ["Class","Level","Material", "Quantity", "KBOB"]
     # creates a new data frame to add to the data frame square (This allows the allocation of the KBOB3 to the dataframe)
@@ -48,8 +52,8 @@ def get_dataframes(material_dataframe):
     dataframe_cubic_2 = dataframe_cubic_2[(dataframe_cubic_2[["Class","Level","Material", "Quantity", "KBOB"]] != 0).all(axis=1)]
     dataframe_square_2 = dataframe_square_2[(dataframe_square_2[["Class","Level","Material", "Quantity", "KBOB"]] != 0).all(axis=1)]
     #change the materials to KBOB materials 
-    dataframe_cubic_2 = functions3.convert_to_KBOB_Materials(dataframe_cubic_2,material_dataframe)
-    dataframe_square_2 = functions3.convert_to_KBOB_Materials(dataframe_square_2, material_dataframe)
+    dataframe_cubic_2 = quantity_takeoff_3.convert_to_KBOB_Materials(dataframe_cubic_2,material_dataframe)
+    dataframe_square_2 = quantity_takeoff_3.convert_to_KBOB_Materials(dataframe_square_2, material_dataframe)
     #creates a dataframe with total quantites per material 
     dataframe_total_per_material_cubic = dataframe_cubic_2.groupby(["Material", "KBOB"])["Quantity"].sum().reset_index(name= "Volume m3") 
     dataframe_total_per_material_square = dataframe_square_2.groupby(["Material","KBOB"])["Quantity"].sum().reset_index(name= "Area m2") 
@@ -93,7 +97,7 @@ def display_qto():
         fig_area = graphs.get_pie_chart(sst["Dataframe_total_square"])
         st.write(fig_area)
             #gets all the levels among the data 
-    levels = functions3.get_classes_levels("Level", sst["dataframe_cubic"])
+    levels = quantity_takeoff_3.get_classes_levels("Level", sst["dataframe_cubic"])
     #gets the level indicated by the user 
     level_selector = st.selectbox("Select Level", options= levels or[] , key="level_selector")
     
@@ -102,7 +106,7 @@ def display_qto():
     with col5:
         st.write("Graph Cubic")
         #filters the data frame
-        sst["Dataframe_Filter_Level_Cubic"] = functions3.dataframe_filtered_by_input(sst["dataframe_cubic"],sst.level_selector, "Level")
+        sst["Dataframe_Filter_Level_Cubic"] = quantity_takeoff_3.dataframe_filtered_by_input(sst["dataframe_cubic"],sst.level_selector, "Level")
         #st.write(sst["Dataframe_Filter_Level_Cubic"])
         df_bar_plot_cubic = sst["Dataframe_Filter_Level_Cubic"].groupby(["Class", "Material"])["Quantity"].sum().reset_index(name='Quantity')
         fig_bar_plot_cubic = px.bar(df_bar_plot_cubic, x= "Class", y="Quantity", color="Material", title="Quantites per Level", width= 800, height= 600)
@@ -115,7 +119,7 @@ def display_qto():
     with col6:
         st.write("Graph Doors and Windows")
         #filters the data frame
-        sst["Dataframe_Filter_Level_Square"] = functions3.dataframe_filtered_by_input(sst["dataframe_square"],sst.level_selector, "Level")
+        sst["Dataframe_Filter_Level_Square"] = quantity_takeoff_3.dataframe_filtered_by_input(sst["dataframe_square"],sst.level_selector, "Level")
         df_bar_plot_square = sst["dataframe_square"].groupby(["Class", "Material"])["Quantity"].count().reset_index(name='Quantity')
         fig_bar_plot_square = px.bar(df_bar_plot_square, x= "Class", y="Quantity", color="Material", title="Quantites per Level", width= 800, height= 600)
         st.write(fig_bar_plot_square)
@@ -150,6 +154,7 @@ def qto():
     
     # gets data from ifc
     dataframe_total_cubic, dataframe_total_square, dataframe_cubic_2, dataframe_suqare_2 = get_dataframes(material_dataframe)
+    dataframe_total_cubic = quantity_takeoff_1.add_reinforcement(dataframe_total_cubic)
     sst["Dataframe_total_cubic"] = dataframe_total_cubic
     sst["Dataframe_total_square"] = dataframe_total_square
     sst["dataframe_cubic"] = dataframe_cubic_2

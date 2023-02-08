@@ -5,6 +5,9 @@ from ifcopenshell.api.material.data import Data
 import numpy as np
 import pandas as pd
 
+#comments:
+#scanrio 0 = worst-case scenario, scenario 1 = baseline scenario, scenario 2 = best-case scenario 
+#cubic dataframe = volume dataframe, square dataframe = area dataframe 
 
 #function to extract the materia thickness and material layer
 def get_material_thickness(object, max_length_layers):
@@ -56,7 +59,7 @@ def get_material_thickness(object, max_length_layers):
                 material_thickness_store[i*2+1]= thickness
 
             return(material_thickness_store)
-        
+#function to name the number of layers depending on the max_length layer of the building e.g. Material Layer 1 Thickness 1        
 def layers_name (length_layer):
     layers_set = []
     for i in range(length_layer):
@@ -64,7 +67,8 @@ def layers_name (length_layer):
         layers_set.append(f'Thickness Layer {i+1}')
     layers_set = list(layers_set)
     return(layers_set)
-        
+
+# gets the max length of the layers of the whoole building        
 def get_length_layers(object):
     length = 1
     Ifc_material_layer_set =Element.get_material(object, should_skip_usage = True)
@@ -79,7 +83,9 @@ def get_length_layers(object):
     return length
 
 
-
+#Algorithm taken from Sigma Dimensions - GitHub
+#https://github.com/myoualid/ifc-101-course/blob/main/episode-09/streamlit-ifc-final/tools/ifchelper.py
+#Gets the max length among all the objects of the building , gets all the property sets of the elements of the buiding
 def get_objects_data_by_class(file, class_type):
     def add_pset_attributes(psets):
         for pset_name, pset_data in psets.items():
@@ -123,7 +129,9 @@ def get_objects_data_by_class(file, class_type):
         
     return objects_data, list(pset_attributes), max_length_layers
 
-
+#Algorithm taken from Sigma Dimensions - GitHub
+#https://github.com/myoualid/ifc-101-course/blob/main/episode-09/streamlit-ifc-final/tools/ifchelper.py
+#gets all the values of the quatity and property stes
 def get_attribute_value(object_data, attribute):
     if "." not in attribute:
         return object_data[attribute]
@@ -143,6 +151,9 @@ def get_attribute_value(object_data, attribute):
     else:
         return None
     
+
+#Algorithm taken from Sigma Dimensions - GitHub
+#https://github.com/myoualid/ifc-101-course/blob/main/episode-09/streamlit-ifc-final/tools/ifchelper.py
 # creates a dataframe with the properties and quantities
 def get_pandas_df_1(data1,pset_attributes): 
     attributes = ["ExpressId", "GlobalId", "Class", "PredefinedType", "Name", "Level", "Type", ] + pset_attributes
@@ -158,7 +169,7 @@ def get_pandas_df_1(data1,pset_attributes):
         data1 = pd.DataFrame.from_records(pandas_data, columns=attributes) 
     return data1
         
-    
+#create data frames with the material name and thickness   
 def get_pandas_df_2(file, max_length_layers, dataframe_properties_quantities):
     # getting the data foor the materials 
     objects= file.by_type("IfcBuildingElement")
@@ -202,6 +213,19 @@ def get_pandas_df3(attributes_materials_thickness, dataframe):
     dataframe = pd.concat([dataframe, dataframe_volumes], axis = 1)
     return dataframe    
 
+#add the reinforcement depensing on the concrete  
+def add_reinforcement(df):
+    reinforcement_total = 0 
+    for i in range(len(df)):
+        id_number = df.iloc[i,1]
+        whole_part, decimal = divmod(id_number,1)
+        if int(whole_part) == 1:
+            concrete = df.iloc[i,2] 
+            reinforcement = concrete*0.025
+            reinforcement_total = reinforcement + reinforcement_total
+
+    df.loc[len(df)] = ['Reinforcement', 6.003, reinforcement_total]
+    return df
 
 
 

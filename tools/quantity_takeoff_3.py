@@ -5,6 +5,10 @@ from ifcopenshell.api.material.data import Data
 import numpy as np
 import pandas as pd
 
+#comments:
+#scanrio 0 = worst-case scenario, scenario 1 = baseline scenario, scenario 2 = best-case scenario 
+#cubic dataframe = volume dataframe, square dataframe = area dataframe 
+
 #function to get all the materials and all the quantitey into two single lines 
 def df_material_quanitty (df, attributes_materials_thickness):
     #create empty data frame to store the data

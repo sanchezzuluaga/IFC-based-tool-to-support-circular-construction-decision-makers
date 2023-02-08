@@ -25,7 +25,7 @@ def get_distance(address_1, address_2):
 
     return distance
 
-#gets index for matvhcin the cost dataframe with the KBOB of each material
+#gets index for matching the cost dataframe with the KBOB of each material
 #def1= costdataframe, df2= cubic or square_
 def match_cost_df_materials(df1,df2, id_number,index_cubic_square):
     found = False
@@ -61,7 +61,7 @@ def match_cost_df_materials(df1,df2, id_number,index_cubic_square):
  
     return index_cost, found
 
-# getting the dtaframe for reuse, recycle and disposal for scenario 1
+# getting the dtaframe for reuse, recycle and disposal for  baseline scenario
 #df1 = datframe_cubic or square,df2 = dataframe_scenarios 
 def get_datframe_reuse_recyle_disposal(df1, df2):
     #saves the values of treuse, recycle, disposal
@@ -123,8 +123,7 @@ def get_datframe_reuse_recyle_disposal(df1, df2):
     dataframe_disposal.iloc[:,2] = disposal_save
     return dataframe_reuse, dataframe_recycle, dataframe_disposal 
 
-#(X)
-# this funciton is for reuse, recycle, disposal for scenario 2
+# this funciton is for reuse, recycle, disposal for the best case scenario
 # getting the dtaframe for reuse, recycle and disposal
 #df1 = datframe_cubic or square,df2 = dataframe_scenarios 
 def get_datframe_reuse_recyle_disposal_2(df1, df2):
@@ -254,7 +253,7 @@ def get_environmental_impact_disposal(df1,material_dataframe, transport_KBOB_dat
         environmental_impact_disposal.iloc[index_cubic_square, 1 : 6] = row_save
     return environmental_impact_disposal 
 
-
+#get environmnetal impact fo recycle
 #df1 = dataframe cubic or square recycle, 
 def get_environmental_impact_recycle(df1,material_dataframe, addres_building, addres_concrete_brick, addres_glas,addres_metals, addres_wood,transport_KBOB_dataframe, dataframe_scenarios):    
     #since the environemntal impact for reuse and recacle are the same
@@ -319,7 +318,7 @@ def get_environmental_impact_recycle(df1,material_dataframe, addres_building, ad
         D = (D1+D2)*factor_EC_EF_D 
         environmental_impact_recycle.iloc[index_cubic_square,6] = D
     return environmental_impact_recycle
-
+#gets distance for recylcing
 #df1 = dataframe_reuse_cubic, df2= dataframe_reuse_squre, 
 def get_distance_recycle( id_number, addres_building, addres_concrete_brick, addres_glas,addres_metals, addres_wood):
     #gets the distance depending on the     
@@ -341,6 +340,7 @@ def get_distance_recycle( id_number, addres_building, addres_concrete_brick, add
     
     return distance
 
+#gets environmental impact for reuse
 #df1= dataframe reuse cubic or dataframe reuse square
 def get_environmental_impact_reuse(df1,material_dataframe,transport_KBOB_dataframe,addres_building, addres_storage, dataframe_scenarios):    
     #gets the environmental impact
@@ -405,7 +405,7 @@ def get_environmental_impact_reuse(df1,material_dataframe,transport_KBOB_datafra
         environmental_impact_reuse.iloc[index_cubic_square,6] = D
     return environmental_impact_reuse
 
-#get environmental impact scenario 0 
+#get environmental impact baseline scenario scenario 
 def get_envrionmental_impact_scenario_1(dataframe_total_cubic, dataframe_total_square ,dataframe_scenarios,material_dataframe,addres_building,addres_concrete_brick,addres_glas,addres_metals,addres_wood,transport_KBOB_dataframe,addres_storage):
 
     #gets dataframe cubic
@@ -435,7 +435,7 @@ def get_envrionmental_impact_scenario_1(dataframe_total_cubic, dataframe_total_s
 
     return  environmental_impact_disposal,  environmental_impact_recycle, environmental_impact_reuse
 
-
+#get environmental impact best-case scenario
 def get_envrionmental_impact_scenario_2(dataframe_total_cubic, dataframe_total_square ,dataframe_scenarios,material_dataframe,addres_building,addres_concrete_brick,addres_glas,addres_metals,addres_wood,transport_KBOB_dataframe,addres_storage):
 
     #gets dataframe cubic
@@ -476,26 +476,23 @@ def get_materials(df):
 
 
 
-# gets the dataframe filtered
+# gets the dataframe filtered by material
 def dataframe_filtered_by_MaterialInput(dataframe, input):
     mask = dataframe["Material"].str.contains(input)
     filtered = dataframe.loc[mask]
     return filtered
 
-#convert to plot
+#restructure the dataframe to be plotted
 def df_EI_to_plot(df):
     
-    a = df[["A1-A3","A4", "A5", "C1-C4", "D"]].sum().to_frame()
+    a = df[["A1-A3", "C1-C4"]].sum().to_frame()
     
     row_labels = {"A1-A3": 0,
-              "A4":1,
-              "A5": 2,
-              "C1-C4": 3,
-              "D":4,
+              "C1-C4": 1,
     }
     
     a.rename(index=row_labels, inplace = True)
-    x = ["A1-A3","A4", "A5", "C1-C4","D"]
+    x = ["A1-A3","C1-C4"]
     c = pd.DataFrame(data= x, columns=["Stages"])
     d = pd.concat([a,c], axis=1)
     d = d.rename(columns={0:"kg-CO2_eq"})
