@@ -33,3 +33,4 @@ To connect the database with the IFC file shared parameters need to be crated ( 
 ### Multi-layer elements:
 
 
+
