@@ -1,7 +1,7 @@
 # IFC-based tool to calculate environmental and cost impacts 
 ## Description
 
-A user-friendly tool was developed that simultaneously calculates the environmental benefits and costs related to reusing/recycling materials. To assist stakeholders of the circular construction in making better-informed decisions.
+A user-friendly IFC-tool was developed that simultaneously calculates the environmental benefits and costs related to reusing/recycling materials. To assist stakeholders of the circular construction in making better-informed decisions.
 The tool should serve to demonstrate to users:
 + At early design stages adopt strategies that facilitate easy deconstruction, highlighting how maximizing materials' reuse potential can significantly reduce environmental impacts.
 + The advantages of reusing and recycling materials at the end-of-life stage of buildings.
@@ -29,5 +29,7 @@ streamlit run C:\Users\simon\Dropbox\01_Master_Thesis\05_Python\App\Homepage.py)
 
 ## Model BIM
 To connect the database with the IFC file shared parameters need to be crated ( In Revit: https://www.youtube.com/watch?v=MGZo8Ue2sq0). THe paramters need to be named as KBOBX, where X is the number of the materials. Id there is a multy-layer element the X needs to increase depending on the number of layers of the element. 
+
+### Multi-layer elements:
 
 
