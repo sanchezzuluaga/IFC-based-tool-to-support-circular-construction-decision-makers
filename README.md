@@ -49,4 +49,6 @@ IfcMaterial (https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/schema/
 + Columns and beams elements need to be extracted as IfcMaterialProfile
 + Doors and Windows need to be extractes as IfcMaterialConstituentSet
 
+Export the IFC file as a IFC4. In Revit export it  as IFC4 Design Tranfer View. The shared paramters need to be also exported --> In Revit: File--> Moodify set up --> Property sets --> Export Revit Property Sets.
 
+In addition, the poperty and quantity sets need to be stored in the right way as outlined by the IFC documentation (https://standards.buildingsmart.org/IFC/RELEASE/IFC4/ADD2_TC1/HTML/).
