@@ -28,4 +28,6 @@ streamlit run C:\Users\simon\Dropbox\01_Master_Thesis\05_Python\App\Homepage.py)
 5. The programm runs and can be used
 
 ## Model BIM
-To connect the database with the IFC file shared parameters to 
+To connect the database with the IFC file shared parameters need to be crated ( In Revit: https://www.youtube.com/watch?v=MGZo8Ue2sq0). THe paramters need to be named as KBOBX, where X is the number of the materials. Id there is a multy-layer element the X needs to increase depending on the number of layers of the element. 
+
+
