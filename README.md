@@ -29,6 +29,7 @@ The program was developed for a Master’s Thesis at ETH Zurich under the superv
 5. To run the tool open Anaconda --> Environments --> Select the created environment (Step 2) --> Press the play  button  of the created environmen --> Open terminal --> enter the following command: streamlit run "direction" (the "direction" needs to be replaced by the file direction where the Homepage.py is located) e.g.: 
 
 (streamlit run C:\Users\simon\Dropbox\01_Master_Thesis\05_Python\App\Homepage.py)
+
 6. The program runs and can be used
 
 ## Instructions to generate the BIM model
