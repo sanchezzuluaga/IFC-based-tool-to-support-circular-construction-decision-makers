@@ -7,23 +7,24 @@ import numpy as np
 import googlemaps
 import math
 
+
 #comments:
 #scanrio 0 = worst-case scenario, scenario 1 = baseline scenario, scenario 2 = best-case scenario 
 #cubic dataframe = volume dataframe, square dataframe = area dataframe 
 
 #importing the database
+filepath = 'C:/Users/simon/Dropbox/01_Master_Thesis/06_KBOB/Database.xlsx' #change filepath where the database is located 
 #KBOB Database materials
-#basePath = "C:/User/" # replace this string with the base directory of the repository
-#material_dataframe = pd.read_excel('Data/Database.xlsx', sheet_name='Material')
-material_dataframe = pd.read_excel('C:/Users/simon/Dropbox/01_Master_Thesis/06_KBOB/KBOB_clean.xlsx', sheet_name='Material')
+material_dataframe = pd.read_excel(filepath, sheet_name='Material')
 #Cost Dataframe
-cost_dataframe  = pd.read_excel('C:/Users/simon/Dropbox/01_Master_Thesis/06_KBOB/KBOB_clean.xlsx', header = [0,1] ,sheet_name='Costs')
+cost_dataframe  = pd.read_excel(filepath, header = [0,1] ,sheet_name='Costs')
 #Cost transport dataframe
-cost_transport_dataframe = pd.read_excel('C:/Users/simon/Dropbox/01_Master_Thesis/06_KBOB/KBOB_clean.xlsx', header = [0,1] ,sheet_name='Cost_Transport')
+cost_transport_dataframe = pd.read_excel(filepath, header = [0,1] ,sheet_name='Cost_Transport')
 #dataframe scenarios
-dataframe_scenarios =  pd.read_excel('C:/Users/simon/Dropbox/01_Master_Thesis/06_KBOB/KBOB_clean.xlsx'  ,sheet_name= 'Scenarios')
+dataframe_scenarios =  pd.read_excel(filepath  ,sheet_name= 'Scenarios')
 #dataframe KBOB transport
-transport_KBOB_dataframe = pd.read_excel('C:/Users/simon/Dropbox/01_Master_Thesis/06_KBOB/KBOB_clean.xlsx'  ,sheet_name= 'Transport_EI')  
+transport_KBOB_dataframe = pd.read_excel(filepath ,sheet_name= 'Transport_EI')  
+ 
  
  
 #session

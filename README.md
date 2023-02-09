@@ -9,7 +9,7 @@ The tool should serve to demonstrate to users:
 
 The tool is divided into two interfaces. The first interface includes the quantity take-off. After uploading the IFC file the tool extracts the bill of quantities. The second interface encompasses the calculation of the environmental and cost impacts. 
 
-The program was developed for a Master’s Thesis at ETH Zurich under the supervision of Dr. Meliha Honic and Brandon Byers. 
+The program was developed for a Master’s Thesis at ETH Zurich under the supervision of Dr. Meliha Honic and Brandon Byers (Chair of Circular Engineering for Architecture). 
 
 ## Installation
 
@@ -24,10 +24,12 @@ The program was developed for a Master’s Thesis at ETH Zurich under the superv
 + math
 + matplotlib.pyplot
 + pprint
-3. In the tools folder under environmental_functions.py and cost_functions.py the get_distance function needs a google id client, please get one and insert it where the command key = "" is 
-4. To run the tool go to anaconda. Press the play  button  of the created environment (step 2) --> Open terminal --> enter the following command: streamlit run "direction" (the "direction" needs to be replaced by the file direction where the Homepage.py is located e.g.: 
-streamlit run C:\Users\simon\Dropbox\01_Master_Thesis\05_Python\App\Homepage.py)
-5. The program runs and can be used
+3. In the "tools" folder under environmental_functions.py and cost_functions.py the "get_distance" function needs a google id client, please get one and insert it where the command key = "" is (https://www.balbooa.com/gridbox-documentation/how-to-get-google-client-id-and-client-secret).
+4. In the file "2_Environmental_Impact_&_Cost.py" and "3_KBOB_overview.py" under the folder "pages", insert the full path (under "filepath") where the "Database.xlsx" is stored.
+5. To run the tool open Anaconda --> Environments --> Select the created environment (Step 2) --> Press the play  button  of the created environmen --> Open terminal --> enter the following command: streamlit run "direction" (the "direction" needs to be replaced by the file direction where the Homepage.py is located) e.g.: 
+
+(streamlit run C:\Users\simon\Dropbox\01_Master_Thesis\05_Python\App\Homepage.py)
+6. The program runs and can be used
 
 ## Instructions to generate the BIM model
 To connect the database with the IFC file shared parameters need to be created( In Revit: https://www.youtube.com/watch?v=MGZo8Ue2sq0). The parameters need to be named KBOBX, where X is the number of the material. If there is a multi-layer element the X needs to increase depending on the number of layers of the element. The value of the shared parameter is the Id. number of the Swiss KBOB database.

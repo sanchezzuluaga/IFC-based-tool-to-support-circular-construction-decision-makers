@@ -12,7 +12,7 @@ import googlemaps
 
 # function to get the ditances between two points
 def get_distance(address_1, address_2):
-    gmaps = googlemaps.Client(key='AIzaSyCRB64YI5yfno7EJ0vRlawD4J6sytsd9AI')
+    gmaps = googlemaps.Client(key=' ') #insert google id client 
     #gets a dictonary 
     my_dist = gmaps.distance_matrix(address_1,address_2)['rows'][0]['elements'][0]
     #entcodes the disctance form the dictonary
